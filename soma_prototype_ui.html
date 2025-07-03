@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>666-SOMA</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#000000">
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle, #0f0f0f, #000000);
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .logo {
+      font-size: 3rem;
+      text-align: center;
+      color: #ff0000;
+      text-shadow: 0 0 20px #ff0000;
+      animation: pulse 2s infinite;
+    }
+    .sub {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      color: #ffffff88;
+    }
+    @keyframes pulse {
+      0% { text-shadow: 0 0 10px #ff0000; }
+      50% { text-shadow: 0 0 25px #ff0000, 0 0 50px #ff3333; }
+      100% { text-shadow: 0 0 10px #ff0000; }
+    }
+    .background-666 {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 5rem;
+      color: #ff000033;
+      font-weight: bold;
+    }
+    .voice-status {
+      margin-top: 30px;
+      font-size: 1rem;
+      color: #ff4444;
+    }
+    select {
+      margin-top: 20px;
+      background: #111;
+      color: white;
+      border: 1px solid #ff0000;
+      padding: 0.5rem;
+      border-radius: 5px;
+    }
+    .avatar-container {
+      position: absolute;
+      top: 60px;
+      right: 60px;
+      width: 240px;
+      height: 240px;
+      background: rgba(255, 0, 0, 0.1);
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 40px #ff0000aa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.4s ease-in-out;
+    }
+    .avatar-container img {
+      width: 100%;
+      height: auto;
+      transition: filter 0.5s ease, transform 0.5s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="background-666">666</div>
+  <div class="logo">
+    S.O.M.A.<br/>
+    <span class="sub">Smart Omnipresent Mobile Assistant</span>
+  </div>
+
+  <select id="languageSelect">
+    <option value="ru-RU">Русский</option>
+    <option value="en-US">English</option>
+    <option value="it-IT">Italiano</option>
+    <option value="az-AZ">Azərbaycanca</option>
+  </select>
+
+  <div class="voice-status" id="voiceStatus">Жду команду...</div>
+
+  <div class="avatar-container" id="avatar">
+    <img id="avatarImg" src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Demonic_skull_art_concept.png" alt="Antichrist Avatar" />
+  </div>
+
+  <script>
+    const status = document.getElementById('voiceStatus');
+    const languageSelect = document.getElementById('languageSelect');
+    const avatar = document.getElementById('avatar');
+    const avatarImg = document.getElementById('avatarImg');
+    let recognition = null;
+
+    function startRecognition(lang) {
+      if (recognition) recognition.stop();
+
+      recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = lang;
+      recognition.interimResults = false;
+      recognition.continuous = true;
+
+      recognition.onstart = () => status.textContent = '🎙️ Слушаю (' + lang + ')...';
+      recognition.onend = () => status.textContent = 'Жду команду...';
+
+      recognition.onresult = async (event) => {
+        const text = event.results[event.results.length - 1][0].transcript;
+        status.textContent = 'Вы сказали: ' + text;
+
+        const emotion = await fetchEmotion(text);
+        const reply = await fetchSomaResponse(text);
+        status.textContent = `🤖 ${reply} \nЭмоция: ${emotion}`;
+
+        updateAvatarByEmotion(emotion);
+        await logTrainingSample(text, reply, emotion);
+      };
+
+      recognition.onerror = (e) => {
+        status.textContent = 'Ошибка речи: ' + e.error;
+      };
+
+      recognition.start();
+    }
+
+    languageSelect.addEventListener('change', (e) => {
+      startRecognition(e.target.value);
+    });
+
+    async function fetchSomaResponse(prompt) {
+      try {
+        const res = await fetch("https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ inputs: prompt })
+        });
+        const data = await res.json();
+        return data.generated_text || "Я думаю...";
+      } catch (e) {
+        return "(нет ответа — возможно лимит API)";
+      }
+    }
+
+    async function fetchEmotion(text) {
+      try {
+        const res = await fetch("https://api-inference.huggingface.co/models/bhadresh-savani/distilbert-base-uncased-emotion", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ inputs: text })
+        });
+        const data = await res.json();
+        const emotions = data[0];
+        if (!emotions) return "неизвестно";
+        const top = emotions.sort((a, b) => b.score - a.score)[0];
+        return top.label;
+      } catch (e) {
+        return "(ошибка определения эмоции)";
+      }
+    }
+
+    function updateAvatarByEmotion(emotion) {
+      const colorMap = {
+        joy: '#ffcc00',
+        sadness: '#3366ff',
+        anger: '#ff0000',
+        fear: '#9900cc',
+        love: '#ff66cc',
+        surprise: '#00ffff',
+        disgust: '#00cc44',
+        neutral: '#ffffff'
+      };
+
+      const color = colorMap[emotion] || '#ffffff';
+      avatar.style.boxShadow = `0 0 40px ${color}`;
+      avatarImg.style.filter = `drop-shadow(0 0 10px ${color}) saturate(2)`;
+      avatarImg.style.transform = `scale(${emotion === 'anger' ? 1.1 : 1.0})`;
+    }
+
+    async function logTrainingSample(input, output, emotion) {
+      console.log("[SOMA auto-train]", { input, output, emotion });
+    }
+
+    // Progressive Web App support
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('soma-sw.js')
+          .then(reg => console.log("SW registered", reg))
+          .catch(err => console.error("SW failed", err));
+      });
+    }
+
+    startRecognition('ru-RU');
+  </script>
+</body>
+</html>

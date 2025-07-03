@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.O.M.A. - Smart Omnipresent Mobile Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h1>S.O.M.A.</h1>
+                <span class="subtitle">Smart Omnipresent Mobile Assistant</span>
+            </div>
+            <div class="status-indicator">
+                <div class="status-dot active"></div>
+                <span class="status-text">Активен</span>
+            </div>
+        </header>
+
+        <!-- Main Interface -->
+        <main class="main-content">
+            <!-- Voice Interface -->
+            <div class="voice-interface">
+                <div class="voice-visualizer">
+                    <div class="wave-container">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                </div>
+                <div class="voice-controls">
+                    <button class="voice-btn" id="voiceBtn">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <div class="wake-word">Скажите "SOMA" для активации</div>
+                </div>
+            </div>
+
+            <!-- Chat Interface -->
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message soma-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                Привет! Я S.O.M.A. — ваш умный ассистент. Я готов помочь вам с любыми задачами. 
+                                Могу создавать контент, управлять устройствами, анализировать данные и даже создавать других AI.
+                                Что вас интересует?
+                            </div>
+                            <div class="message-time">Сейчас</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input-container">
+                    <div class="input-wrapper">
+                        <input type="text" id="messageInput" placeholder="Введите сообщение или нажмите микрофон..." class="chat-input">
+                        <button class="send-btn" id="sendBtn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h3>Быстрые действия</h3>
+                <div class="action-grid">
+                    <button class="action-btn" data-action="create-content">
+                        <i class="fas fa-pen-fancy"></i>
+                        <span>Создать контент</span>
+                    </button>
+                    <button class="action-btn" data-action="smart-home">
+                        <i class="fas fa-home"></i>
+                        <span>Умный дом</span>
+                    </button>
+                    <button class="action-btn" data-action="ai-creation">
+                        <i class="fas fa-magic"></i>
+                        <span>Создать AI</span>
+                    </button>
+                    <button class="action-btn" data-action="analysis">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Анализ данных</span>
+                    </button>
+                    <button class="action-btn" data-action="calendar">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Календарь</span>
+                    </button>
+                    <button class="action-btn" data-action="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Настройки</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Языки</h3>
+                <div class="language-selector">
+                    <button class="lang-btn active" data-lang="ru">RU</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="it">IT</button>
+                    <button class="lang-btn" data-lang="az">AZ</button>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Режимы интерфейса</h3>
+                <div class="interface-modes">
+                    <button class="mode-btn active" data-mode="voice">
+                        <i class="fas fa-microphone"></i>
+                        Голос
+                    </button>
+                    <button class="mode-btn" data-mode="graphical">
+                        <i class="fas fa-desktop"></i>
+                        Графический
+                    </button>
+                    <button class="mode-btn" data-mode="ar">
+                        <i class="fas fa-vr-cardboard"></i>
+                        AR
+                    </button>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Активные модули</h3>
+                <div class="modules-list" id="modulesList">
+                    <div class="module-item active">
+                        <i class="fas fa-brain"></i>
+                        <span>Когнитивный интеллект</span>
+                        <div class="module-status"></div>
+                    </div>
+                    <div class="module-item active">
+                        <i class="fas fa-language"></i>
+                        <span>Многоязычность</span>
+                        <div class="module-status"></div>
+                    </div>
+                    <div class="module-item active">
+                        <i class="fas fa-code"></i>
+                        <span>Самообучение</span>
+                        <div class="module-status"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="aiCreationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Создание нового AI</h2>
+                <button class="close-btn" id="closeAiModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Название AI:</label>
+                    <input type="text" id="aiName" placeholder="Введите название">
+                </div>
+                <div class="form-group">
+                    <label>Специализация:</label>
+                    <select id="aiSpecialization">
+                        <option value="content_creator">Создание контента</option>
+                        <option value="data_analyzer">Анализ данных</option>
+                        <option value="task_manager">Управление задачами</option>
+                        <option value="creative_assistant">Творческий помощник</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Описание:</label>
+                    <textarea id="aiDescription" placeholder="Опишите функции AI"></textarea>
+                </div>
+                <button class="create-ai-btn" id="createAiBtn">
+                    <i class="fas fa-magic"></i>
+                    Создать AI
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="soma-enhanced.js"></script>
+</body>
+</html> 

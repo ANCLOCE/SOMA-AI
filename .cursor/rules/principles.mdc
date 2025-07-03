@@ -1,0 +1,19 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+1. Neuromodel Yanaşması — Mövcudluq və Tətbiq
+PrinsipSistemdə TətbiqiKomponentlərarası “sinaps” əlaqələriuseTabManager, NeuroContext, modullar arası real-time bağlanmaDinamik reşap olunan UXFaza 6 və 7-də istifadəçinin davranışına görə interfeys tənzimlənirLearning loopAI usage logs və context-based rendering strukturda nəzərdə tutulubTəbii UX axınıTab-ların və kontent bölgülərinin davranışa görə tənzimlənməsi
+:white_check_mark: Əhatə olunur
+:jigsaw: 2. Lego Modulyarlığı — Mövcudluq və Tətbiq
+PrinsipSistemdə TətbiqiDrag & drop komponent düzümüFaza 2 və 5-də UI səviyyəsində tab + lego registry planlanıbYAML/JSON ilə modul konfiqurasiyasıModuleManifest.ts və metadata sisteminə hazır plan varUI + logic + API binding birlikdəHər modul UI + Logic + Endpoints şəklində təşkil olunurTexniki olmayan istifadəçilər üçün no-code strukturAdmin interfeysində no-code setup panel planlaşdırılıb
+:white_check_mark: Əhatə olunur
+:dna: 3. Ontoloji Modelləşmə — Mövcudluq və Tətbiq
+PrinsipSistemdə TətbiqiTriplərlə məlumat təsnifatı (subject–predicate–object)Faza 9 – AI Query Engine üçün RDF-like struktur yaradılırSemantic mapping ilə təbii dil sorğularıLangChain əsaslı “Natural language → query” sistemi təklif olunurKontekstə görə məna dəyişir, məlumat özü yox“Same data, different lens” yanaşması tətbiq edilir
+:white_check_mark: Əhatə olunur
+:sparkles: Birlik Model (NeuroLego-OntoSystem) – Sistemdə Yekun Forması
+
+KomponentSistemə Əks OlunmasıAdaptasiyaNeuroContext + UX dəyişkənlikModulyarlıqTabManager + LEGO modul registryAI & Semantik AğılOntoloji model + LLM sorğu interaksiyası
+
+slack, yəni bütün səhifələr tabda açılmalıdır
