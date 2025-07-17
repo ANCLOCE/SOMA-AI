@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # S.O.M.A. - Smart Omnipresent Mobile Assistant
 
 ![SOMA Logo](https://img.shields.io/badge/SOMA-AI%20Assistant-blue?style=for-the-badge&logo=robot)
@@ -210,6 +209,3 @@ soma.activeModules.delete('old_module');
 ---
 
 **S.O.M.A. - Будущее AI уже здесь! 🤖✨** 
-=======
-# SOMA-AI
->>>>>>> 7c82f48de8087f19823f9ab9a2050689603ca5d8
