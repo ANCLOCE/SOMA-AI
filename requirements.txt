@@ -1,0 +1,20 @@
+# Core
+flet
+llama-cpp-python
+chromadb
+pypdf
+
+# ASR (Vosk)
+vosk
+sounddevice
+
+# TTS (Piper)
+piper-tts
+soundfile
+
+# Note: whisper.cpp is not a pip package.
+# It needs to be compiled from source following the instructions
+# in its repository: https://github.com/ggerganov/whisper.cpp
+#
+# Note: sentence-transformers and torch were removed due to their large size.
+# Embeddings will be generated via a GGUF model using llama-cpp-python.
